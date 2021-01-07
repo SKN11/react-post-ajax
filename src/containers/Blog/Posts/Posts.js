@@ -4,6 +4,10 @@ import axios from '../../../axios'
 import Post from '../../../components/Post/Post'
 import classes from './Posts.module.css'
 import  './Posts.css'
+import FullPost from '../FullPost/FullPost'
+import {Route,Link} from 'react-router-dom'
+
+
 
 
 
@@ -18,6 +22,7 @@ class Posts extends Component {
     }
 
     componentDidMount(){
+        console.log(this.props);
         axios.get('/posts')
         .then((response) =>{
             const paginatedPost = response.data.slice(0,4);
@@ -29,7 +34,7 @@ class Posts extends Component {
             });
             
             this.setState({posts:updatedPost})
-            console.log(response);
+            //console.log(response);
         } )
         .catch( error => {
            // this.setState({error:true});
@@ -39,9 +44,7 @@ class Posts extends Component {
     }
 
     selectedPostHandler = (id) => (
-        this.setState({
-            selectedPostId:id
-        })
+        this.props.history.push('/posts/'+id)
     )
 
     render () {
@@ -50,21 +53,24 @@ class Posts extends Component {
         if(!this.state.error)
          {
              posts = this.state.posts.map(
-             (post) => <Post 
-                key={post.id} 
+             (post) => 
+             <Post
+             key={post.id} 
                 title={post.title} 
                 author = {post.author}
                 clicked={()=> this.selectedPostHandler(post.id)}  />
+                
         );
 
          }
 
          return (
-    
+            <div>
             <section className="Posts">
                     {posts}
                 </section>
-
+            <Route path={this.props.match.url+'/:id'} exact component={FullPost} />
+            </div>
          );
     }
 }
