@@ -18,12 +18,7 @@ class Blog extends Component {
     state={
         auth:false,
     }
-
-
     
-
-
-
     render () {
         
         return (
@@ -39,7 +34,7 @@ class Blog extends Component {
                                  textDecoration:'underline'
                              }}>Home</NavLink></li>
                             {/* <li><Link to ={this.props.match.url+"/"}>Home</Link></li>
-                             for reative path*/} 
+                             for reative path */} 
                             <li><NavLink to ={{
                                 pathname:'/new-post'}}>
                                     New Post
